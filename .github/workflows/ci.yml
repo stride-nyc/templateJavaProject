@@ -26,8 +26,8 @@ jobs:
       - name: Set up Gradle (with caching)
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run tests
-        run: ./gradlew test --no-daemon
+      - name: Run checks
+        run: ./gradlew check --no-daemon
 
       - name: Upload test reports
         if: failure()
