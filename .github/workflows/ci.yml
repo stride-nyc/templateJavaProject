@@ -26,8 +26,33 @@ jobs:
       - name: Set up Gradle (with caching)
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run checks
-        run: ./gradlew check --no-daemon
+      # Each check is its own step so it shows its own pass/fail.
+      # `!cancelled()` lets later steps run even if an earlier one failed.
+
+      - name: Formatting (Spotless)
+        run: ./gradlew spotlessCheck
+
+      - name: Compile and test
+        id: test
+        if: ${{ !cancelled() }}
+        run: ./gradlew test
+
+      - name: Checkstyle
+        if: ${{ !cancelled() }}
+        run: ./gradlew checkstyleMain checkstyleTest
+
+      - name: PMD
+        if: ${{ !cancelled() }}
+        run: ./gradlew pmdMain pmdTest
+
+      - name: SpotBugs
+        if: ${{ !cancelled() }}
+        run: ./gradlew spotbugsMain spotbugsTest
+
+      # Coverage is only meaningful if the tests passed.
+      - name: Coverage (JaCoCo)
+        if: ${{ !cancelled() && steps.test.outcome == 'success' }}
+        run: ./gradlew jacocoTestCoverageVerification
 
       - name: Upload test reports
         if: failure()
