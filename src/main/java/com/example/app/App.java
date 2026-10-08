@@ -9,6 +9,7 @@ public final class App {
   }
 
   static String greeting() {
-    return "Hello, world!";
+      var phrase = "Hello, world!";
+    return phrase;
   }
 }

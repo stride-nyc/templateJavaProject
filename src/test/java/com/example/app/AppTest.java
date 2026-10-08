@@ -10,4 +10,9 @@ class AppTest {
   void greetingReturnsHelloWorld() {
     assertEquals("Hello, world!", App.greeting(), "greeting() should return the expected message");
   }
+
+  @Test
+  void greetingReturnsHelloWorldFailure() {
+    assertEquals("Helloooo, world!", App.greeting(), "greeting() should return the expected message");
+  }
 }
