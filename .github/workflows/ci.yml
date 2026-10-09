@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -10,8 +11,28 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  check:
+    # Each matrix entry becomes its own job, and its own line
+    # in the PR's checks list (e.g. "CI / Checkstyle").
+    name: ${{ matrix.name }}
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false   # let every check finish even if one fails
+      matrix:
+        include:
+          - id: spotless
+            name: Formatting (Spotless)
+            tasks: spotlessCheck
+          - id: tests
+            name: Tests and coverage
+            tasks: test jacocoTestCoverageVerification
+          - id: checkstyle
+            name: Checkstyle
+            tasks: checkstyleMain checkstyleTest
+          - id: pmd
+            name: PMD
+            tasks: pmdMain pmdTest
 
     steps:
       - name: Check out code
@@ -26,13 +47,13 @@ jobs:
       - name: Set up Gradle (with caching)
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run checks
-        run: ./gradlew check --no-daemon
+      - name: Run ${{ matrix.name }}
+        run: ./gradlew ${{ matrix.tasks }}
 
-      - name: Upload test reports
+      - name: Upload reports
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
-          path: '**/build/reports/tests/'
+          name: reports-${{ matrix.id }}
+          path: '**/build/reports/'
           retention-days: 7
