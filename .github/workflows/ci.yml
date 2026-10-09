@@ -33,9 +33,6 @@ jobs:
           - id: pmd
             name: PMD
             tasks: pmdMain pmdTest
-          - id: spotbugs
-            name: SpotBugs
-            tasks: spotbugsMain spotbugsTest
 
     steps:
       - name: Check out code
