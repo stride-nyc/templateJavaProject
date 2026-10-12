@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit *)",
+            "command": "output=$(cd /Users/jonathandrew/dev/templateJavaProject && ./gradlew compileJava spotlessCheck checkstyleMain checkstyleTest checkstyleIntTest pmdMain pmdTest pmdIntTest 2>&1); code=$?; if [ $code -ne 0 ]; then reason=$(printf '%s' \"$output\" | tail -150); jq -n --arg reason \"$reason\" '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:(\"Pre-commit Gradle checks failed (compileJava, spotlessCheck, checkstyle*, pmd*):\\n\\n\" + $reason)}}'; else echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"allow\"}}'; fi",
+            "timeout": 180,
+            "statusMessage": "Running compile, format check, Checkstyle, PMD before commit..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-compact-context.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
