@@ -5,8 +5,8 @@ A Java project template with Gradle (Kotlin DSL), Checkstyle, PMD, [google-java-
 ## Requirements
 
 - The [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) (`./gradlew`) is checked in — you don't need Gradle installed locally.
-- No JDK needs to be pre-installed either: the project targets **Java 25** via a Gradle toolchain, and the `foojay-resolver-convention` plugin (`settings.gradle.kts`) will auto-download a matching JDK if one isn't already on your machine.
-- The Gradle **daemon** itself is also pinned to JDK 25, via `gradle/gradle-daemon-jvm.properties` (generated with `./gradlew updateDaemonJvm --jvm-version=25`). This keeps the build tooling (Spotless/google-java-format in particular) running on a JDK it's actually compatible with, regardless of whatever JDK happens to be on your `PATH`.
+- No JDK needs to be pre-installed either: the project targets **Java 25**, and the `foojay-resolver-convention` plugin (`settings.gradle.kts`) will auto-download a matching JDK if one isn't already on your machine.
+- The Java version is defined in exactly one place: `gradle/gradle-daemon-jvm.properties`. It pins the Gradle **daemon** itself (keeping build tooling like Spotless/google-java-format on a JDK it's actually compatible with, regardless of what's on your `PATH`), and `build.gradle.kts` reads that same file to set the project's `java.toolchain`. To bump the Java version, run `./gradlew updateDaemonJvm --jvm-version=<version>` — don't edit a version number directly in `build.gradle.kts`, there isn't one.
 
 ## Project layout
 
