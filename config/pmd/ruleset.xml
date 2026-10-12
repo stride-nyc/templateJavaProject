@@ -11,9 +11,8 @@
     </description>
 
     <rule ref="category/java/bestpractices.xml">
+        <!-- slf4j's parameterized logging ({}) makes isDebugEnabled()-style guards unnecessary. -->
         <exclude name="GuardLogStatement"/>
-        <!-- Console I/O is expected in a main() entry point, not just logging code. -->
-        <exclude name="SystemPrintln"/>
     </rule>
     <rule ref="category/java/errorprone.xml"/>
     <rule ref="category/java/design.xml">
