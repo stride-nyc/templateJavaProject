@@ -38,6 +38,9 @@ configurations.named("intTestRuntimeOnly") {
 val junitVersion = "6.1.3"
 
 dependencies {
+    implementation("org.slf4j:slf4j-api:2.0.20")
+    runtimeOnly("ch.qos.logback:logback-classic:1.6.5")
+
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
