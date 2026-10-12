@@ -80,6 +80,30 @@ val jacocoIntTestReport =
         }
     }
 
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.test, intTestTask)
+    executionData(tasks.test.get(), intTestTask.get())
+    violationRules {
+        rule {
+            limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
+                minimum = "0.80".toBigDecimal()
+            }
+        }
+
+        rule {
+            element = "CLASS"
+            excludes = listOf("*.config.*", "*.dto.*")
+            limit {
+                counter = "BRANCH"
+                value = "COVEREDRATIO"
+                minimum = "0.70".toBigDecimal()
+            }
+        }
+    }
+}
+
 checkstyle {
     toolVersion = "14.3.0"
     configFile = file("config/checkstyle/checkstyle.xml")
@@ -118,5 +142,5 @@ spotless {
 }
 
 tasks.check {
-    dependsOn(intTestTask, tasks.jacocoTestReport, jacocoIntTestReport, tasks.named("spotlessCheck"))
+    dependsOn(intTestTask, tasks.jacocoTestReport, jacocoIntTestReport, tasks.named("spotlessCheck"), tasks.jacocoTestCoverageVerification)
 }
