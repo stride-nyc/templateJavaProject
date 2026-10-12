@@ -3,7 +3,7 @@ plugins {
     jacoco
     checkstyle
     pmd
-    id("com.diffplug.spotless") version "8.9.0"
+    id("com.diffplug.spotless") version "8.10.4"
 }
 
 group = "com.example"
@@ -13,9 +13,20 @@ repositories {
     mavenCentral()
 }
 
+val daemonJvmLanguageVersion =
+    providers
+        .fileContents(layout.projectDirectory.file("gradle/gradle-daemon-jvm.properties"))
+        .asText
+        .map { text ->
+            val version =
+                text.lineSequence().firstOrNull { it.startsWith("toolchainVersion=") }?.substringAfter("=")
+                    ?: error("toolchainVersion not found in gradle/gradle-daemon-jvm.properties")
+            JavaLanguageVersion.of(version)
+        }
+
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(25))
+        languageVersion.set(daemonJvmLanguageVersion)
     }
 }
 
@@ -137,7 +148,7 @@ tasks.withType<Pmd>().configureEach {
 spotless {
     java {
         target("src/*/java/**/*.java")
-        googleJavaFormat("1.28.0")
+        googleJavaFormat("1.36.1")
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
