@@ -1,11 +1,11 @@
 package com.example.app;
 
-import nl.altindag.log.LogCaptor;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import nl.altindag.log.LogCaptor;
+import org.junit.jupiter.api.Test;
 
 class AppIntegrationTest {
 
