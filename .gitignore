@@ -6,7 +6,12 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
-.idea/
+!.idea/
+.idea/*
+!.idea/google-java-format.xml
+!.idea/codeStyles/
+.idea/codeStyles/*
+!.idea/codeStyles/codeStyleConfig.xml
 *.iml
 *.ipr
 *.iws

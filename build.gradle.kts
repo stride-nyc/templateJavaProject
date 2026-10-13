@@ -54,6 +54,7 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:$junitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation("io.github.hakky54:logcaptor:2.12.7")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
