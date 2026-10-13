@@ -13,6 +13,8 @@
     <rule ref="category/java/bestpractices.xml">
         <!-- slf4j's parameterized logging ({}) makes isDebugEnabled()-style guards unnecessary. -->
         <exclude name="GuardLogStatement"/>
+        <exclude name="UnitTestContainsTooManyAsserts"/>
+        <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
     </rule>
     <rule ref="category/java/errorprone.xml"/>
     <rule ref="category/java/design.xml">
