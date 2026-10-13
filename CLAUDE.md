@@ -18,3 +18,12 @@ src/int-test      — integration tests, run by `intTest`, not part of `test`
 - Formatting via Spotless + google-java-format — run `spotlessApply`, don't hand-format
 - Coverage gate requires 80% line / 70% branch, combined across unit + integration tests
 - PRs must list Jira story keys per `.github/pull_request_template.md`
+
+## Recommended Claude Code plugins
+```
+/plugin marketplace add stride-nyc/stride-plugins-official
+/plugin install pdca-framework@stride-plugins-official
+/plugin install afb-tdd@stride-plugins-official
+
+/plugin install superpowers@claude-plugins-official
+```
