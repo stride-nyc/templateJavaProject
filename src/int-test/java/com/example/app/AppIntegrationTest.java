@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AppIntegrationTest {
 
@@ -19,5 +20,11 @@ class AppIntegrationTest {
   void mainLogsGreeting() {
     App.main(new String[] {});
     assertEquals("Hello, world!", logCaptor.getInfoLogs().getFirst());
+  }
+
+  @Test
+  void mainNoErrorMessages() {
+    App.main(new String[] {});
+    assertTrue(logCaptor.getErrorLogs().isEmpty());
   }
 }
